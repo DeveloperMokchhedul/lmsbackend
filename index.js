@@ -1,9 +1,10 @@
 import express from 'express'
 import dotenv from 'dotenv';
+import DBCONNECTION from './middleware/db.js';
 dotenv.config();
 
 const PORT= process.env.PORT
-
+DBCONNECTION();
 
 const app = express()
 
