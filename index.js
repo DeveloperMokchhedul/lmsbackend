@@ -3,13 +3,15 @@ import dotenv from 'dotenv';
 import DBCONNECTION from './middleware/db.js';
 import authRouter  from "./routes/auth.js"
 dotenv.config();
+DBCONNECTION();
 
 
 
 
 const app = express()
 const PORT= process.env.PORT
-DBCONNECTION();
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.use("/api",authRouter )
 
