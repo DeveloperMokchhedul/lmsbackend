@@ -11,6 +11,13 @@ export const encodedToken =async (id,email)=>{
     
 }
 
+
+export const decodedToken=async (token)=>{
+     const KEY = "mokchhedul"
+   return await jwt.verify(token, KEY);
+
+}
+
 export const hashedPassword = async (password) => {
     
     return await bcrypt.hash(password, 10); 

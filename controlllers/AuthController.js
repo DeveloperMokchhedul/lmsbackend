@@ -68,7 +68,7 @@ const login = async(req, res)=>{
        console.log("token is", token);
        
 
-        return res.status(200).cookie("token",token, {httpOnly:true}).json({
+        return res.status(200).cookie("token",token).json({
             success:true,
             message:"user login successfully"
         })
@@ -88,9 +88,60 @@ const login = async(req, res)=>{
 
 
 
+const logOut = (req,res)=>{
+    try {
+        res.clearCookie("token", {
+            httpOnly:true,
+            secure: true,
+            sameSite: "none"
+        })
+
+        res.status(200).json({
+            success:true,
+            message:"user logout successfully"
+        })
+
+                
+    } catch (error) {
+        return res.status(401).json({
+            success:false,
+            message:"user logout failed"
+        })
+
+    }
+}
+
+
+
+const userProfile =async (req, res)=>{
+    try {
+
+        const id =await req.id
+        const userData = await User.find({_id:id}).select("-password");
+        console.log("user data is ", userData);
+
+        return res.status(200).json({
+            success:true,
+            message:"user profile fetched",
+            data:userData
+        })
+        
+
+    
+        
+        
+    } catch (error) {
+        return res.status(401).json({
+            success:false,
+            message:"faild to find profile"
+        })
+        
+    }
+}
+
 
 
 
 
 // Export as default object
-export default { registration, login };
+export default { registration, login,logOut, userProfile };
