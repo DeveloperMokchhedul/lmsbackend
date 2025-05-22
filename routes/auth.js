@@ -9,6 +9,7 @@ router.post("/user/registration", auth.registration)
 router.post("/user/login", auth.login)
 router.post("/user/logout", authverification , auth.logOut)
 router.get("/user/profile", authverification , auth.userProfile)
+router.put("/user/update", authverification , auth.profileUpdate)
 
 
 

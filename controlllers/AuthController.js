@@ -113,6 +113,8 @@ const logOut = (req,res)=>{
 
 
 
+// user profile section
+
 const userProfile =async (req, res)=>{
     try {
 
@@ -125,18 +127,48 @@ const userProfile =async (req, res)=>{
             message:"user profile fetched",
             data:userData
         })
-        
-
-    
-        
-        
     } catch (error) {
         return res.status(401).json({
             success:false,
             message:"faild to find profile"
         })
+    }
+}
+
+
+
+
+// user profile update section 
+
+const profileUpdate =async(req,res)=>{
+    try {
+
+        const userId = req.id
+        const {fname,lname}= req.body;
+
+        
+        const updatedUser = await User.findByIdAndUpdate(userId,{
+            $set:{
+                fname,
+                lname
+            }
+
+        }, {new:true}).select("-password")
+
+        return res.status(200).json({
+            success:true,
+            message:"user profile fetched",
+            data:updatedUser
+        })
+          
+    } catch (error) {
+        return res.status(401).json({
+            success:false,
+            message:"profile update failed"
+        })
         
     }
+
 }
 
 
@@ -144,4 +176,4 @@ const userProfile =async (req, res)=>{
 
 
 // Export as default object
-export default { registration, login,logOut, userProfile };
+export default { registration, login,logOut, userProfile, profileUpdate };
